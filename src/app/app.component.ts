@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import {CommentModel} from '../models/CommentModel';
+import {CommentService} from './services/comment.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `<h1>Comments</h1>
+<app-comment *ngFor="let c of comments" [comment]="c"></app-comment>`,
+  styles: ['h1{background-color: antiquewhite}']
 })
 export class AppComponent {
-  title = 'angular-lection1-part2';
+  comments: CommentModel[];
+
+  constructor(private commentService: CommentService) {
+    this.commentService.getComments().subscribe(value => this.comments = value);
+  }
 }
